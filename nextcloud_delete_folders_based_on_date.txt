@@ -1,0 +1,27 @@
+Summary / Purpose
+The script is designed to delete folders matching a specific pattern (based on the current date or a debug pattern) from a Nextcloud installation. It handles empty and non-empty folders differently, and can run in productive mode (actually deleting folders) or debug mode (simulating the deletion process). In productive mode, it also sends Telegram messages with information about the deleted folders and files.
+
+Procedure / Steps
+1. The script starts by defining a function print_w_ts that prints the given string with a timestamp.
+2. The script checks if an argument is provided. If not, it prints usage instructions and exits.
+3. It sets the starting folder, Telegram chat ID, and server name from environment variables.
+4. It sets the pattern for folder names based on the current date (for productive mode) or a debug pattern.
+5. It enables recursive globbing for the file search.
+6. It changes to the starting folder.
+7. It checks if there are any folders matching the pattern. If not, it prints a message and exits.
+8. It loops through all folders matching the pattern.
+9. For each folder, it prints the folder path.
+10. If the folder is empty:
+
+- In productive mode, it deletes the empty folder and sends a Telegram message.
+- In debug mode with curl, it sends a debug Telegram message (without deleting the folder).
+
+
+11. If the folder is not empty:
+
+-It prints the folder contents.
+-In productive mode, it deletes the non-empty folder and sends Telegram messages with the deleted folder and file names.
+-In debug mode with curl, it sends debug Telegram messages with the folder and file names (without deleting the folder).
+
+
+12. After processing all folders, if in productive mode, it updates the database by running the Nextcloud command files:scan --all to update the Web GUI.
